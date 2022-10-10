@@ -4,9 +4,12 @@ A social networking platform for the growing American Muslim community.
 ## Project Links
 
 Under construction. Check back soon for links!
-- [Website](thisIsALink)
-- [iPhone](thisIsALink)
-- [Android](thisIsALink)
+
+LINKS DO NOT WORK YET.
+
+- [Website](https://github.com/mohammad523/Linker)
+- [iPhone](https://github.com/mohammad523/Linker)
+- [Android](https://github.com/mohammad523/Linker)
 
 
 ## Project Description

@@ -11,20 +11,14 @@ Under construction. Check back soon for links!
 
 ## Project Description
 
--
-
 A social networking platform for the growing American Muslim community. This application is going to have a website, iPhone, and android apps. 
 
 
 ## Technologies
 
-Front-end: 
+- Front-end: React.js, React Native
 
-React.js, React Native
-
-Back-end: 
-
-Rails
+- Back-end: Rails
 
 
 ## Wireframes
@@ -79,7 +73,7 @@ Unless otherwise noted, time is listed in hours:
 
 | Component | Priority | Estimated Time | Time Invetsted | Actual Time |
 | --- | :---: |  :---: | :---: | :---: |
-| Total | H | 36 | 32 |  |
+| Total | H | 25 | - | - |
 
 ## Additional Libraries
 

@@ -28,7 +28,7 @@ A social networking platform for the growing American Muslim community. This app
 
 Not available at the moment.
 
-- [wireframes]()
+- [wireframes](https://github.com/mohammad523/Linker)
 
 ## Components
 

@@ -20,7 +20,7 @@ A social networking platform for the growing American Muslim community. This app
 
 ## Technologies
 
-- Front-end: React.js, React Native
+- Front-end: React.js, React Native, Redux
 
 - Back-end: Node.js, Express.js, MongoDB
 

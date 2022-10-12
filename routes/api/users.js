@@ -25,7 +25,6 @@ router.post("/", async (req, res) => {
 			firstName,
 			lastName,
 			phoneNumber,
-
 			email,
 			password,
 			linkedIn,
@@ -56,7 +55,6 @@ router.post("/", async (req, res) => {
 			firstName,
 			lastName,
 			phoneNumber,
-
 			email,
 			password,
 			linkedIn,

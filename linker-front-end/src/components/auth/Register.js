@@ -75,7 +75,7 @@ const Register = () => {
 
 		try {
 			async function res(data) {
-				await axios.post(`http://localhost:5000/api/users`, data);
+				await axios.post(`/api/users`, data);
 			}
 			res(obj);
 

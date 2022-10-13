@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const normalize = require("normalize");
 const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
 
 /**
  * import User model
@@ -42,7 +43,7 @@ router.post("/", async (req, res) => {
 			res.status(400).json({ errors: [{ msg: "User already exists" }] });
 		}
 
-		let avatar = normalize(
+		const avatar = normalize(
 			gravatar.url(email, {
 				s: "200",
 				r: "pg",
@@ -66,6 +67,12 @@ router.post("/", async (req, res) => {
 			justNetworking,
 			meetMe,
 		});
+
+		// encrypt password
+
+		const salt = await bcrypt.genSalt(10);
+
+		user.password == (await bcrypt.hash(password, salt));
 
 		await user.save();
 

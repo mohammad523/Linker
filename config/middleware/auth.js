@@ -12,9 +12,6 @@ module.exports = function (req, res, next) {
 	// get token from header
 	const token = req.header("x-auth-token");
 
-	console.log("token", token);
-	console.log("request object", req);
-
 	// check if no token
 	if (!token) {
 		return res.status(401).json({ msg: "No token, authorization denied." });
@@ -24,18 +21,20 @@ module.exports = function (req, res, next) {
 
 	try {
 		// decrypt token
-		const decoded = jwt.verify(token, config.get("jwtSecret"));
+		jwt.verify(token, config.get("jwtSecret"), (error, decoded) => {
+			if (error) {
+				return res.status(401).json({ msg: "Token is not valid" });
+			} else {
+				// this will connect the payload
 
-		console.log("decoded", decoded);
+				req.user = decoded.user;
 
-		// this will connect the payload
-		req.user = decoded;
-
-		next();
+				next();
+			}
+		});
 	} catch (error) {
 		// if token is not valid, this will run
 
-		console.log("res object", res);
 		res.status(401).json({ msg: "Token is not valid" });
 	}
 };

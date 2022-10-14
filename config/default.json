@@ -1,4 +1,5 @@
 
 {
-    "mongoURI": "mongodb+srv://mh111:XCbxL1b0RRCM96DC@cluster0.qiimdue.mongodb.net/?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://mh111:XCbxL1b0RRCM96DC@cluster0.qiimdue.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "donttellanyonewhatthissecrettokenisssss"
 }

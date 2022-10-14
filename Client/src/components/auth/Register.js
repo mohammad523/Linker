@@ -118,7 +118,7 @@ const Register = () => {
 				/>
 				<input
 					className='input-wide'
-					type='text'
+					type='tel'
 					placeholder='Phone Number'
 					name='phoneNumber'
 					value={phoneNumber}

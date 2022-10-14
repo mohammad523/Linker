@@ -2,9 +2,12 @@
 
 const express = require("express");
 const router = express.Router();
-const normalize = require("normalize");
+// const normalizeUrl = require("normalize-url");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const { check, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 /**
  * import User model
@@ -16,70 +19,110 @@ const User = require("../../models/User.js");
  * desc     Register route
  * access   Public
  */
-router.post("/", async (req, res) => {
-	/**
-	 * see if user exists
-	 */
+router.post(
+	"/",
+	[
+		check("firstName", "Please enter your first name.").notEmpty(),
+		check("lastName", "Please enter your last name.").notEmpty(),
+		check("email", "Please enter a valid email address.").notEmpty().isEmail(),
+		check("phoneNumber", "Please enter a valid phone number.")
+			.notEmpty()
+			.isMobilePhone(),
+		check("password", "Please enter a password that has 6 characters or more.")
+			.notEmpty()
+			.isLength({ min: 6 }),
+	],
 
-	try {
-		const {
-			firstName,
-			lastName,
-			phoneNumber,
-			email,
-			password,
-			linkedIn,
-			location,
-			bio,
-			jobSeeking,
-			hiring,
-			justNetworking,
-			meetMe,
-		} = req.body;
-
-		let user = await User.findOne({ email });
-
-		if (user) {
-			res.status(400).json({ errors: [{ msg: "User already exists" }] });
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(422).json({ errors: errors.array() });
 		}
 
-		const avatar = normalize(
-			gravatar.url(email, {
+		/**
+		 * see if user exists
+		 */
+
+		try {
+			const {
+				firstName,
+				lastName,
+				phoneNumber,
+				email,
+				password,
+				linkedIn,
+				location,
+				bio,
+				jobSeeking,
+				hiring,
+				justNetworking,
+				meetMe,
+			} = req.body;
+
+			let user = await User.findOne({ email });
+
+			if (user) {
+				res.status(400).json({ errors: [{ msg: "User already exists." }] });
+				return;
+			}
+
+			// Gravatar
+			const avatar = gravatar.url(email, {
 				s: "200",
 				r: "pg",
 				d: "mm",
-			}),
-			{ forceHttps: true }
-		);
+			});
 
-		user = new User({
-			firstName,
-			lastName,
-			phoneNumber,
-			email,
-			password,
-			linkedIn,
-			location,
-			avatar,
-			bio,
-			jobSeeking,
-			hiring,
-			justNetworking,
-			meetMe,
-		});
+			user = new User({
+				firstName,
+				lastName,
+				phoneNumber,
+				email,
+				password,
+				linkedIn,
+				location,
+				avatar,
+				bio,
+				jobSeeking,
+				hiring,
+				justNetworking,
+				meetMe,
+			});
 
-		// encrypt password
+			// encrypt password
 
-		const salt = await bcrypt.genSalt(10);
+			const salt = await bcrypt.genSalt(10);
 
-		user.password == (await bcrypt.hash(password, salt));
+			user.password = await bcrypt.hash(password, salt);
 
-		await user.save();
+			await user.save();
 
-		res.send("User Registered");
-	} catch (err) {
-		console.error(err.message);
-		res.status(500).send("Server Error");
+			// return jsonwebtoken
+
+			const payload = {
+				user: {
+					id: user.id,
+					email: user.email,
+				},
+			};
+			// ^^^^^^^^^^ that id is the ID of the recently saved user
+
+			jwt.sign(
+				payload,
+				config.get("jwtSecret"),
+				{ expiresIn: 360000 },
+				(err, token) => {
+					if (err) throw err;
+					res.json({ token });
+					console.log(token);
+				}
+			);
+
+			// protected routes middleware 30 mins
+		} catch (err) {
+			console.error(err.message);
+			res.status(500).send("Server Error");
+		}
 	}
-});
+);
 module.exports = router;

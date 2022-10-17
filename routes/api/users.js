@@ -31,6 +31,7 @@ router.post(
 		check("password", "Please enter a password that has 6 characters or more.")
 			.notEmpty()
 			.isLength({ min: 6 }),
+		check("paid", "Please pay $1.00 to complete registration.").equals(true),
 	],
 
 	async (req, res) => {
@@ -57,6 +58,7 @@ router.post(
 				hiring,
 				justNetworking,
 				meetMe,
+				paid,
 			} = req.body;
 
 			let user = await User.findOne({ email });
@@ -87,6 +89,7 @@ router.post(
 				hiring,
 				justNetworking,
 				meetMe,
+				paid,
 			});
 
 			// encrypt password

@@ -8,13 +8,13 @@
 }
 
 .btn-wide {
-	width: 400px;
+	width: 350px;
 	padding: 10px;
 	margin: 10px 0px;
 	font-size: 20px;
-	color: black;
+	color: white;
 	transition-duration: 0.4s;
-	background-color: white;
+	background-color:rgb(4, 93, 209);
 	border-radius: 30px;
 	/* border-color: gray; */
 	border: 2px solid rgb(4, 93, 209);
@@ -26,15 +26,33 @@
 	padding: 10px;
 	margin: 10px 0px;
 	font-size: 20px;
-	background-color: white;
+	background-color: rgb(247, 247, 247);
 	border-radius: 30px;
-	border: 2px solid black(4, 93, 209);
+	border: none;
+	outline: none
 
 }
 
 
+
 .btn-wide:hover {
-	background-color: rgb(4, 93, 209);
+	background-color: rgb(0, 51, 118);
 	color: white;
 	cursor: pointer;
+}
+
+h1  {
+	font-weight: 100;
+}
+h2  {
+	font-weight: 100;
+}
+h3  {
+	font-weight: 100;
+}
+h4  {
+	font-weight: 100;
+}
+h5  {
+	font-weight: 100;
 }

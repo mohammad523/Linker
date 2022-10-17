@@ -5,6 +5,7 @@ import axios from "axios";
 import styles from "./Register.css";
 // Latest version - v3.0.0 with Tree Shaking to reduce bundle size
 import { Country, State, City } from "country-city-state";
+import Payment from "./Payment";
 
 const Register = () => {
 	const [formData, setFormData] = useState({
@@ -209,13 +210,9 @@ const Register = () => {
 						/>
 						<label htmlFor='meetMe'> Meet Me</label>
 					</span>
-				</div>{" "}
-				<input
-					style={{ width: "90%" }}
-					type='submit'
-					className='btn-wide '
-					value='Register'
-				/>
+				</div>
+				<Payment />
+				<input type='submit' className='btn-wide ' value='Register' />
 			</form>
 		</>
 	);

@@ -50,6 +50,11 @@ const UserSchema = new mongoose.Schema({
 	meetMe: {
 		type: Boolean,
 	},
+	paid: {
+		type: Boolean,
+		default: false,
+		required: true,
+	},
 	date: {
 		type: Date,
 		default: Date.now,

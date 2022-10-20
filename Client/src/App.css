@@ -67,7 +67,6 @@ h5  {
 	background: rgb(2,0,36);
 	background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(31,29,241,1) 52%, rgba(0,212,255,1) 100%);
 	width: 100vw;
-	opacity: .9;
 	/* border: 1px solid white; */
 	justify-content: space-evenly;
 }
@@ -79,7 +78,7 @@ h5  {
 	justify-content: space-evenly;	
 	/* justify-content: space-around;	 */
 	align-items: center;
-	width: 75vw
+	width: 60vw
 	
 	
 }

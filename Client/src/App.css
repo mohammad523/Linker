@@ -86,4 +86,10 @@ h5  {
 .nav-links > li {
 }
 
+/* Payment Component Styles**********************************************
+*/
+
+.payment-component {
+	text-align: center;
+}
 

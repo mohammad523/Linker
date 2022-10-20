@@ -45,8 +45,8 @@ const Payment = () => {
 	};
 
 	return (
-		<div>
-			<h1>Payment Component</h1>
+		<div className='payment-component'>
+			<h1>Payment</h1>
 			<StripeCheckout
 				stripeKey={
 					"pk_test_51LtSimCZreCAdwFJvNNfiuiXbeFHmH4qE9wis8KdCFkWiWHj1TnMvLck7ku7GSAx462rZoNM33EuIHoSY2sDe2c3008JkWyGnG"

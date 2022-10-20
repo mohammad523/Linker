@@ -8,6 +8,7 @@ import {
 	Switch,
 } from "react-router-dom";
 import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 import Nav from "./components/layout/Navbar";
 import styles from "./App.css";
 
@@ -17,6 +18,7 @@ function App() {
 			<Nav />
 			<Routes>
 				<Route path='/' element={<Register />} />
+				<Route path='/Login' element={<Login />} />
 			</Routes>
 		</Router>
 	);

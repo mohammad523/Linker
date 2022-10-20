@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 // const normalizeUrl = require("normalize-url");
 const gravatar = require("gravatar");
+const normalize = require("normalize-path");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
@@ -31,7 +32,7 @@ router.post(
 		check("password", "Please enter a password that has 6 characters or more.")
 			.notEmpty()
 			.isLength({ min: 6 }),
-		check("paid", "Please pay $1.00 to complete registration.").equals(true),
+		check("paid", "Please pay $1.00 to complete registration.").notEmpty(),
 	],
 
 	async (req, res) => {
@@ -39,10 +40,6 @@ router.post(
 		if (!errors.isEmpty()) {
 			return res.status(422).json({ errors: errors.array() });
 		}
-
-		/**
-		 * see if user exists
-		 */
 
 		try {
 			const {
@@ -60,6 +57,16 @@ router.post(
 				meetMe,
 				paid,
 			} = req.body;
+			/**
+			 * see if user exists
+			 */
+
+			if (paid === false || paid === "false" || paid === "0" || paid === 0) {
+				res.status(400).json({
+					errors: [{ msg: "Please pay $1.00 to complete registration." }],
+				});
+				return;
+			}
 
 			let user = await User.findOne({ email });
 
@@ -69,11 +76,13 @@ router.post(
 			}
 
 			// Gravatar
-			const avatar = gravatar.url(email, {
-				s: "200",
-				r: "pg",
-				d: "mm",
-			});
+			const avatar = normalize(
+				gravatar.url(email, {
+					s: "200",
+					r: "pg",
+					d: "mm",
+				})
+			);
 
 			user = new User({
 				firstName,
@@ -105,7 +114,6 @@ router.post(
 			const payload = {
 				user: {
 					id: user.id,
-					email: user.email,
 				},
 			};
 			// ^^^^^^^^^^ that id is the ID of the recently saved user

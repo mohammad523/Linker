@@ -1,13 +1,23 @@
 body {
   margin: 0;
   padding: 0;
-
+  background-color:#ffffff;
+  
 }
 
 *{
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  
 }
 
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

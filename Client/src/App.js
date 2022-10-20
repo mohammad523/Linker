@@ -1,15 +1,24 @@
 /** @format */
 
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Switch,
+} from "react-router-dom";
 import Register from "./components/auth/Register";
+import Nav from "./components/layout/Navbar";
 import styles from "./App.css";
 
 function App() {
 	return (
-		<div className='App'>
-			<Register />
-		</div>
+		<Router>
+			<Nav />
+			<Routes>
+				<Route path='/' element={<Register />} />
+			</Routes>
+		</Router>
 	);
 }
 

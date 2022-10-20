@@ -88,8 +88,8 @@ const Register = () => {
 
 	return (
 		<>
-			<h1>Register for Linker</h1>
 			<form className='register-form' action='' onSubmit={(e) => onSubmit(e)}>
+				<h1>Register for Linker</h1>
 				<input
 					className='input-wide'
 					type='text'

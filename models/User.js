@@ -52,8 +52,8 @@ const UserSchema = new mongoose.Schema({
 	},
 	paid: {
 		type: Boolean,
-		default: false,
 		required: true,
+		default: false,
 	},
 	date: {
 		type: Date,

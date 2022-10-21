@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Register.css";
 // Latest version - v3.0.0 with Tree Shaking to reduce bundle size
-import { Country, State, City } from "country-city-state";
+import { Country, State, City } from "country-state-city";
 import Payment from "./Payment";
 
 const Register = () => {
@@ -16,10 +16,14 @@ const Register = () => {
 		password: "",
 		password2: "",
 		linkedIn: "",
-		location: "",
 		bio: "",
+		paid: "true",
 	});
-
+	const [states, setStates] = useState(State.getStatesOfCountry("US"));
+	const [cities, setCities] = useState();
+	const [stateInput, setStateInput] = useState("");
+	const [cityInput, setCityInput] = useState("");
+	const [location, setLocation] = useState("");
 	const [checkboxes, setCheckboxes] = useState({
 		jobSeeking: false,
 		hiring: false,
@@ -35,16 +39,55 @@ const Register = () => {
 		password,
 		password2,
 		linkedIn,
-		location,
 		bio,
 	} = formData;
+
+	let stateAndCodeObj = {};
+
+	// Map through states array
+	let stateNames = states.map((state, index) => {
+		// Create an object with name and iso code key value pair
+		stateAndCodeObj = { ...stateAndCodeObj, [state.name]: state.isoCode };
+		return (
+			<option key={index} value={state.name} statecode={state.isoCode}>
+				{state.name}
+			</option>
+		);
+	});
+
+	const handleStateChange = async (e) => {
+		console.log(e.target.value, "stateAndCodeObj", stateAndCodeObj);
+
+		await setStateInput(e.target.value);
+
+		const stateCode = stateAndCodeObj[e.target.value];
+
+		setCities(City.getCitiesOfState("US", stateCode));
+	};
+	const handleCityChange = (e) => {
+		setCityInput(e.target.value);
+		setLocation(`${e.target.value}, ${stateInput}`);
+	};
+
+	let cityNames = cities
+		? cities.map((city, index) => {
+				return (
+					<option key={index} value={city.name}>
+						{city.name}
+					</option>
+				);
+		  })
+		: "";
 
 	const { jobSeeking, hiring, justNetworking, meetMe } = checkboxes;
 
 	// Forms on change
 	const onChange = (e) => {
 		// console.log("event.target.name", e.target.name);
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setFormData({
+			...formData,
+			[e.target.name]: e.target.value,
+		});
 	};
 
 	// Checkboxes on change
@@ -52,7 +95,10 @@ const Register = () => {
 	const onChckChange = (e) => {
 		setCheckboxes({ ...checkboxes, [e.target.name]: e.target.checked });
 
-		setFormData({ ...formData, ...checkboxes });
+		setFormData({
+			...formData,
+			...checkboxes,
+		});
 	};
 
 	// Phone number client side rendering
@@ -68,7 +114,7 @@ const Register = () => {
 			alert("Passwords do not match");
 			return;
 		}
-		let obj = { ...formData, ...checkboxes };
+		let obj = { ...formData, ...checkboxes, location };
 
 		console.log(obj);
 
@@ -152,14 +198,29 @@ const Register = () => {
 					value={linkedIn}
 					onChange={(e) => onChange(e)}
 				/>
-				<input
-					className='input-wide'
-					type='text'
-					placeholder='Location: City, State'
-					name='location'
-					value={location}
-					onChange={(e) => onChange(e)}
-				/>
+				<label>State and city</label>
+				<div>
+					<select
+						name='states'
+						id='states'
+						placeholder='State'
+						className='dropdown-input'
+						value={stateInput}
+						onChange={(e) => handleStateChange(e)}
+					>
+						{stateNames ? stateNames : ""}
+					</select>
+					<select
+						name='cities'
+						placeholder='City'
+						className='dropdown-input'
+						value={cityInput}
+						id='cities'
+						onChange={(e) => handleCityChange(e)}
+					>
+						{cityNames ? cityNames : ""}
+					</select>
+				</div>
 				<textarea
 					className='input-wide'
 					type='text'

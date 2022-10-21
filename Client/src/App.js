@@ -7,7 +7,7 @@ import {
 	Route,
 	Switch,
 } from "react-router-dom";
-import Register from "./components/auth/Register";
+import Register from "./components/auth/Register/Register";
 import Login from "./components/auth/Login";
 import Nav from "./components/layout/Navbar";
 import styles from "./App.css";

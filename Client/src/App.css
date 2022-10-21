@@ -32,6 +32,17 @@
 	outline: none
 
 }
+.dropdown-input {
+	width: 156px;
+	padding: 10px;
+	margin: 10px ;
+	font-size: 20px;
+	background-color: rgb(247, 247, 247);
+	border-radius: 10px;
+	border: none;
+	outline: none
+
+}
 
 
 

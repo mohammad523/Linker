@@ -3,6 +3,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = (props) => {
 	const [formData, setFormData] = useState({
@@ -55,6 +56,12 @@ const Login = (props) => {
 					required
 				/>
 				<input type='submit' className='btn-wide ' value='Login' />
+				<p>
+					Don't have have an account?{"  "}
+					<Link className='blue-link' to='/'>
+						Sign Up
+					</Link>
+				</p>
 			</form>
 		</div>
 	);

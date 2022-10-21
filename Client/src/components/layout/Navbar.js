@@ -29,7 +29,7 @@ const Navbar = () => {
 	const guestLinks = (
 		<ul className='nav-links'>
 			<li>
-				<Link to='/'>Members</Link>
+				<Link to='/Members'>Members</Link>
 			</li>
 			<li>
 				<Link to='/'>Register</Link>

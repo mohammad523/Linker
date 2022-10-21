@@ -6,6 +6,7 @@ import styles from "./Register.css";
 // Latest version - v3.0.0 with Tree Shaking to reduce bundle size
 import { Country, State, City } from "country-state-city";
 import Payment from "./Payment";
+import { Link } from "react-router-dom";
 
 const Register = () => {
 	const [formData, setFormData] = useState({
@@ -56,8 +57,6 @@ const Register = () => {
 	});
 
 	const handleStateChange = async (e) => {
-		console.log(e.target.value, "stateAndCodeObj", stateAndCodeObj);
-
 		await setStateInput(e.target.value);
 
 		const stateCode = stateAndCodeObj[e.target.value];
@@ -274,6 +273,12 @@ const Register = () => {
 				</div>
 				<Payment />
 				<input type='submit' className='btn-wide ' value='Register' />
+				<p>
+					Already have an account?{"  "}
+					<Link className='blue-link' to='/login'>
+						Sign In
+					</Link>
+				</p>
 			</form>
 		</>
 	);

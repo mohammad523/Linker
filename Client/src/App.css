@@ -124,3 +124,30 @@ h5  {
 .blue-link{
 	color: Blue;
 }
+
+/*
+* ALERT STYLING *******************************************************************************
+*/
+
+
+
+.alert-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100vw;
+	text-align: center;
+}
+.alert {
+	margin: 1px 0px;
+	width: 100vw;
+	font-size: 25px;
+
+}
+
+.alert-danger{
+	background-color: red;
+	color: white;
+	
+}

@@ -3,12 +3,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Register.css";
-// Latest version - v3.0.0 with Tree Shaking to reduce bundle size
+// connect connects the component to redux
+import { connect } from "react-redux";
+import { setAlert } from "../../../actions/alert";
+import { register } from "../../../actions/auth";
 import { Country, State, City } from "country-state-city";
 import Payment from "./Payment";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import Alert from "../../layout/Alert";
 
-const Register = () => {
+const Register = ({ setAlert, register }) => {
+	/**
+	 * TO DO FOR REGISITER COMPONENT
+	 */
+
+	// Phone number client side rendering
+
+	// Backend password encryption
+
+	// Backend Error checking
 	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",
@@ -100,17 +114,11 @@ const Register = () => {
 		});
 	};
 
-	// Phone number client side rendering
-
-	// Backend password encryption
-
-	// Backend Error checking
-
 	const onSubmit = (e) => {
 		e.preventDefault();
 
 		if (password !== password2) {
-			alert("Passwords do not match");
+			setAlert("Passwords do not match", "danger");
 			return;
 		}
 		let obj = { ...formData, ...checkboxes, location };
@@ -119,16 +127,18 @@ const Register = () => {
 
 		// Axios post request try catch
 
-		try {
-			async function res(data) {
-				await axios.post(`/api/users`, data);
-			}
-			res(obj);
+		register(obj);
 
-			console.log(res);
-		} catch (err) {
-			console.error(err);
-		}
+		// try {
+		// 	async function res(data) {
+		// 		await axios.post(`/api/users`, data);
+		// 	}
+		// 	res(obj);
+
+		// 	console.log(res);
+		// } catch (err) {
+		// 	console.error(err);
+		// }
 	};
 
 	return (
@@ -142,7 +152,7 @@ const Register = () => {
 					name='firstName'
 					value={firstName}
 					onChange={(e) => onChange(e)}
-					required
+					// required
 				/>
 				<input
 					className='input-wide'
@@ -151,7 +161,7 @@ const Register = () => {
 					name='lastName'
 					value={lastName}
 					onChange={(e) => onChange(e)}
-					required
+					// required
 				/>
 				<input
 					className='input-wide'
@@ -160,7 +170,7 @@ const Register = () => {
 					name='email'
 					value={email}
 					onChange={(e) => onChange(e)}
-					required
+					// required
 				/>
 				<input
 					className='input-wide'
@@ -169,7 +179,7 @@ const Register = () => {
 					name='phoneNumber'
 					value={phoneNumber}
 					onChange={(e) => onChange(e)}
-					required
+					// required
 				/>
 				<input
 					className='input-wide'
@@ -178,7 +188,7 @@ const Register = () => {
 					name='password'
 					value={password}
 					onChange={(e) => onChange(e)}
-					required
+					// required
 				/>
 				<input
 					className='input-wide'
@@ -187,7 +197,7 @@ const Register = () => {
 					name='password2'
 					value={password2}
 					onChange={(e) => onChange(e)}
-					required
+					// required
 				/>
 				<input
 					className='input-wide'
@@ -273,6 +283,7 @@ const Register = () => {
 				</div>
 				<Payment />
 				<input type='submit' className='btn-wide ' value='Register' />
+				<Alert />
 				<p>
 					Already have an account?{"  "}
 					<Link className='blue-link' to='/login'>
@@ -284,4 +295,11 @@ const Register = () => {
 	);
 };
 
-export default Register;
+Register.propTypes = {
+	setAlert: PropTypes.func.isRequired,
+	register: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = {};
+
+export default connect(null, { setAlert, register })(Register);

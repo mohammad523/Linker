@@ -3,9 +3,11 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
 
-const Login = (props) => {
+const Login = ({ login, isAuthenticated }) => {
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -21,17 +23,12 @@ const Login = (props) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		try {
-			async function res(data) {
-				await axios.post(`/api/users`, data);
-			}
-			res();
-
-			console.log(res);
-		} catch (err) {
-			console.error(err);
-		}
+		login(email, password);
 	};
+
+	if (isAuthenticated) {
+		return <Navigate to='/Dashboard' />;
+	}
 
 	return (
 		<div className='login'>
@@ -67,4 +64,13 @@ const Login = (props) => {
 	);
 };
 
-export default Login;
+Login.propTypes = {
+	login: PropTypes.func.isRequired,
+	isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

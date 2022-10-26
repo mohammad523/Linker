@@ -9,11 +9,11 @@ import { setAlert } from "../../../actions/alert";
 import { register } from "../../../actions/auth";
 import { Country, State, City } from "country-state-city";
 import Payment from "./Payment";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Alert from "../../layout/Alert";
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
 	/**
 	 * TO DO FOR REGISITER COMPONENT
 	 */
@@ -123,23 +123,12 @@ const Register = ({ setAlert, register }) => {
 		}
 		let obj = { ...formData, ...checkboxes, location };
 
-		console.log(obj);
-
-		// Axios post request try catch
-
 		register(obj);
-
-		// try {
-		// 	async function res(data) {
-		// 		await axios.post(`/api/users`, data);
-		// 	}
-		// 	res(obj);
-
-		// 	console.log(res);
-		// } catch (err) {
-		// 	console.error(err);
-		// }
 	};
+
+	if (isAuthenticated) {
+		return <Navigate to='/Dashboard' />;
+	}
 
 	return (
 		<>
@@ -298,8 +287,11 @@ const Register = ({ setAlert, register }) => {
 Register.propTypes = {
 	setAlert: PropTypes.func.isRequired,
 	register: PropTypes.func.isRequired,
+	isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = {};
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default connect(null, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);

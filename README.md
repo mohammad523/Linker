@@ -16,7 +16,7 @@ LINKS DO NOT WORK YET.
 
 ## Project Description
 
-A social networking platform for the growing American Muslim community. This application is going to have a website, iPhone, and android apps.
+A social networking platform. This application is going to have a website, iPhone, and android apps.
 
 ## Technologies
 

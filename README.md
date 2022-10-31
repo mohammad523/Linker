@@ -2,7 +2,7 @@
 
 # Linker
 
-A social networking platform for the growing American Muslim community.
+A networking and event planning platform for professionals and non-profit organizations.
 
 ## Project Links
 

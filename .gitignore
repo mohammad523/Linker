@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/config/db.js
+/config/default.json
 /config/google-keys.js
 /config/facebook-keys.js
 /config/config.env

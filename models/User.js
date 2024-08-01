@@ -9,20 +9,27 @@ const UserSchema = new mongoose.Schema({
 	},
 	lastName: {
 		type: String,
-		required: true,
 	},
 	phoneNumber: {
 		type: String,
-		required: true,
+		unique: true,
 	},
 	email: {
 		type: String,
 		required: true,
 		unique: true,
+		lowercase: true,
+	},
+	googleId: {
+		type: String,
+		unique: true,
+	},
+	facebookId: {
+		type: String,
+		unique: true,
 	},
 	password: {
 		type: String,
-		required: true,
 	},
 
 	linkedIn: {
@@ -33,7 +40,6 @@ const UserSchema = new mongoose.Schema({
 	},
 	avatar: {
 		type: String,
-		required: true,
 	},
 	bio: {
 		type: String,
@@ -52,7 +58,6 @@ const UserSchema = new mongoose.Schema({
 	},
 	paid: {
 		type: Boolean,
-		required: true,
 		default: false,
 	},
 	date: {

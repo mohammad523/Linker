@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
+import axios from "axios";
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 	const authLinks = (
@@ -16,14 +17,13 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 			</li>
 			<li>
 				<Link to='/dashboard'>
-					<i className='fas fa-user' />{" "}
 					<span className='hide-sm'>Dashboard</span>
 				</Link>
 			</li>
-			<li>
-				<a onClick={logout} href='#!'>
+			<li onClick={logout}>
+				<Link to='/login'>
 					<span className='hide-sm'>Logout</span>
-				</a>
+				</Link>
 			</li>
 		</ul>
 	);
@@ -34,10 +34,10 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 				<Link to='/Members'>Members</Link>
 			</li>
 			<li>
-				<Link to='/'>Register</Link>
+				<Link to='/Register'>Register</Link>
 			</li>
 			<li>
-				<Link to='/Login'>Login</Link>
+				<Link to='/login'>Login</Link>
 			</li>
 		</ul>
 	);
@@ -45,7 +45,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 	return (
 		<nav className='navbar'>
 			<h1>
-				<Link to='/'>
+				<Link to='/login'>
 					<i className='fas fa-code' /> muz-link
 				</Link>
 			</h1>

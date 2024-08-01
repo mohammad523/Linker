@@ -8,7 +8,7 @@ const PrivateRoute = ({
 	component: Component,
 	auth: { isAuthenticated, loading },
 }) => {
-	if (loading) return <h1>Loading...</h1>;
+	if (loading) return <h1 className='page'>Loading...</h1>;
 	if (isAuthenticated) return <Component />;
 
 	return <Navigate to='/login' />;
@@ -19,7 +19,6 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	// below is all the state from the auth reducer
 	auth: state.auth,
 });
 

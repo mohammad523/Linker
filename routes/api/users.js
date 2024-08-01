@@ -2,12 +2,12 @@
 
 const express = require("express");
 const router = express.Router();
-// const normalizeUrl = require("normalize-url");
 const gravatar = require("gravatar");
-const normalize = require("normalize-path");
+const normalize = require("normalize-url");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 const config = require("config");
 
 /**
@@ -81,7 +81,8 @@ router.post(
 					s: "200",
 					r: "pg",
 					d: "mm",
-				})
+				}),
+				{ forceHttps: true }
 			);
 
 			user = new User({
@@ -136,4 +137,87 @@ router.post(
 		}
 	}
 );
+
+// Route for initiating the Google OAuth authentication
+router.post(
+	"/google",
+	passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+// Route for handling the Google OAuth callback
+router.post(
+	"/google/callback",
+	passport.authenticate("google", { failureRedirect: "/login" }),
+	async (req, res) => {
+		try {
+			// Assuming you store the entire profile in the user object
+			const googleUser = req.user;
+
+			// Check if the user already exists in your database
+			let user = await User.findOne({ email: googleUser.email });
+
+			if (user) {
+				res.status(400).json({ errors: [{ msg: "User already exists." }] });
+				return;
+			}
+
+			// If the user doesn't exist, create a new user record
+			if (!user) {
+				user = new User({
+					firstName: googleUser.firstName,
+					lastName: googleUser.lastName,
+					phoneNumber: "", // You may adjust this based on your schema
+					email: googleUser.email,
+					password: "", // No need for a password since it's a Google sign-up
+					// Add other properties as needed
+					// ...
+				});
+
+				console.log(req.user);
+				console.log(res);
+
+				// Gravatar
+				const avatar = normalize(
+					gravatar.url(googleUser.email, {
+						s: "200",
+						r: "pg",
+						d: "mm",
+					}),
+					{ forceHttps: true }
+				);
+
+				user.avatar = avatar;
+
+				// Save the new user to the database
+				await user.save();
+			}
+
+			// Create a JWT token for the user
+			const payload = {
+				user: {
+					id: user.id,
+				},
+			};
+
+			jwt.sign(
+				payload,
+				config.get("jwtSecret"),
+				{ expiresIn: 360000 },
+				(err, token) => {
+					if (err) {
+						console.error(err.message);
+						res.status(500).send("Server error");
+					} else {
+						// Respond with the generated token
+						res.json({ token });
+					}
+				}
+			);
+		} catch (err) {
+			console.error(err.message);
+			res.status(500).send("Server Error");
+		}
+	}
+);
+
 module.exports = router;

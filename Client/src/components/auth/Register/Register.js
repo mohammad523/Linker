@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import { setAlert } from "../../../actions/alert";
 import { register } from "../../../actions/auth";
 import { Country, State, City } from "country-state-city";
-import Payment from "./Payment";
 import { Link, Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Alert from "../../layout/Alert";
+import GoogleSignUpButton from "../0auth/GoogleSignUpButton";
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
 	/**
@@ -29,7 +29,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		email: "",
 		phoneNumber: "",
 		password: "",
-		password2: "",
 		linkedIn: "",
 		bio: "",
 		paid: "true",
@@ -69,6 +68,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 			</option>
 		);
 	});
+
+	// not sure if i want these in the register page
+	const maybe = <></>;
 
 	const handleStateChange = async (e) => {
 		await setStateInput(e.target.value);
@@ -117,17 +119,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		if (password !== password2) {
-			setAlert("Passwords do not match", "danger");
-			return;
-		}
+		// if (password !== password2) {
+		// 	setAlert("Passwords do not match", "danger");
+		// 	return;
+		// }
 		let obj = { ...formData, ...checkboxes, location };
 
 		register(obj);
 	};
 
 	if (isAuthenticated) {
-		return <Navigate to='/Dashboard' />;
+		return <Navigate to='/dashboard' />;
 	}
 
 	return (
@@ -177,16 +179,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 					name='password'
 					value={password}
 					onChange={(e) => onChange(e)}
-					// required
-				/>
-				<input
-					className='input-wide'
-					type='password'
-					placeholder='Confirm Password'
-					name='password2'
-					value={password2}
-					onChange={(e) => onChange(e)}
-					// required
+					required
 				/>
 				<input
 					className='input-wide'
@@ -270,7 +263,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						<label htmlFor='meetMe'> Meet Me</label>
 					</span>
 				</div>
-				<Payment />
 				<input type='submit' className='btn-wide ' value='Register' />
 				<Alert />
 				<p>
@@ -280,6 +272,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 					</Link>
 				</p>
 			</form>
+			<GoogleSignUpButton className='btn-wide' />
 		</>
 	);
 };

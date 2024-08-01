@@ -2,10 +2,11 @@
   "name": "linker-front-end",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
-    "@stripe/react-stripe-js": "^1.13.0",
-    "@stripe/stripe-js": "^1.41.0",
+    "@stripe/react-stripe-js": "^1.16.5",
+    "@stripe/stripe-js": "^1.54.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,9 +15,12 @@
     "bootstrap": "^5.2.2",
     "cors": "^2.8.5",
     "country-state-city": "^3.1.2",
+    "dotenv": "^16.4.5",
+    "http-proxy-middleware": "^3.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-moment": "^1.1.2",
@@ -53,6 +57,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

@@ -1,7 +1,6 @@
 /** @format */
 
-import { compose, applyMiddleware } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
@@ -11,13 +10,11 @@ const initialState = {};
 
 const middleware = [thunk];
 
-const composedMiddleware = composeWithDevTools(applyMiddleware(...middleware));
-
-const store = configureStore({
-	reducer: rootReducer,
+const store = createStore(
+	rootReducer,
 	initialState,
-	composedMiddleware,
-});
+	composeWithDevTools(applyMiddleware(...middleware))
+);
 
 /*
   NOTE: set up a store subscription listener
@@ -28,18 +25,17 @@ const store = configureStore({
   initialize current state from redux store for subscription comparison
   preventing undefined error
  */
+let currentState = store.getState();
 
-// let currentState = store.getState();
-
-// store.subscribe(() => {
-// 	let previousState = currentState;
-
-// 	currentState = store.getState();
-
-// 	if (previousState.auth.token !== currentState.auth.token) {
-// 		const token = currentState.auth.token;
-// 		setAuthToken(token);
-// 	}
-// });
+store.subscribe(() => {
+	// keep track of the previous and current state to compare changes
+	let previousState = currentState;
+	currentState = store.getState();
+	// if the token changes set the value in localStorage and axios headers
+	if (previousState.auth.token !== currentState.auth.token) {
+		const token = currentState.auth.token;
+		setAuthToken(token);
+	}
+});
 
 export default store;

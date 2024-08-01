@@ -77,6 +77,28 @@ h5  {
 	font-weight: 100;
 }
 
+.center-text{
+	text-align: center;
+}
+
+.btn {
+	width: 350px;
+	margin: 10px 0px;
+	font-size: 20px;
+	color: white;
+	transition-duration: 0.4s;
+	background-color:#1f1df1;
+	border-radius: 30px;
+	/* border-color: gray; */
+	border: none;
+	height: 50px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
 
 /* Navbar Styles***********************************************************************************************
 */
@@ -151,11 +173,22 @@ h5  {
 	margin: 1px 0px;
 	width: 100vw;
 	font-size: 25px;
-
+	
 }
 
 .alert-danger{
 	background-color: red;
 	color: white;
 	
+}
+
+/*
+* Members Styling *******************************************************************************
+*/
+
+.member-item {
+	border: 1px lightgray solid;
+	border-radius: 20px;
+	padding: 20px;
+	margin: 20px;
 }

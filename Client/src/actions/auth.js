@@ -1,6 +1,6 @@
 /** @format */
 
-import axios from "axios";
+import api from "../utils/api";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 import {
@@ -11,15 +11,13 @@ import {
 	LOGIN_SUCCESS,
 	LOGIN_FAIL,
 	LOGOUT,
+	GET_PROFILE,
 } from "./types";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-	if (localStorage.token) {
-		setAuthToken(localStorage.token);
-	}
 	try {
-		const res = await axios.get("/api/auth");
+		const res = await api.get("/auth");
 
 		dispatch({
 			type: USER_LOADED,
@@ -32,7 +30,7 @@ export const loadUser = () => async (dispatch) => {
 
 export const register = (userData) => async (dispatch) => {
 	try {
-		const res = await axios.post("/api/users", userData);
+		const res = await api.post("/users", userData);
 
 		dispatch({
 			type: REGISTER_SUCCESS,
@@ -58,7 +56,7 @@ export const login = (email, password) => async (dispatch) => {
 		password,
 	};
 	try {
-		const res = await axios.post("/api/auth", body);
+		const res = await api.post("/auth", body);
 
 		dispatch({
 			type: LOGIN_SUCCESS,
@@ -79,7 +77,34 @@ export const login = (email, password) => async (dispatch) => {
 	}
 };
 
-// logout
-export const logout = () => (dispatch) => {
-	dispatch({ type: LOGOUT });
+// Logout
+export const logout = () => ({ type: LOGOUT });
+
+// Google OAuth
+export const googleRegister = () => async (dispatch) => {
+	try {
+		const res = window.open(
+			`http://localhost:5000/api/auth/google/callback`,
+			"_self"
+		);
+
+		console.log(res);
+
+		dispatch({
+			type: REGISTER_SUCCESS,
+			payload: res.data,
+		});
+
+		dispatch(loadUser());
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+		}
+
+		dispatch({
+			type: REGISTER_FAIL,
+		});
+	}
 };

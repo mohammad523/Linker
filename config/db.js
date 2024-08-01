@@ -3,12 +3,14 @@
 // this file connects mongoose to mongodb atlas
 
 const mongoose = require("mongoose");
-const config = require("config");
-const db = config.get("mongoURI");
+const keys = require("./default.json");
+
+const db = keys.MONGO_URI;
+const dbLocal = keys.MONGO_LOCAL;
 
 const connectDB = async () => {
 	try {
-		await mongoose.connect(db);
+		await mongoose.connect(dbLocal);
 
 		console.log("MongoDB Connected...");
 	} catch (err) {

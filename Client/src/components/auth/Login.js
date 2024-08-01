@@ -3,9 +3,10 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
+import GoogleSignInButton from "./0auth/GoogleSignInButton";
 
 const Login = ({ login, isAuthenticated }) => {
 	const [formData, setFormData] = useState({
@@ -16,7 +17,6 @@ const Login = ({ login, isAuthenticated }) => {
 	const { email, password } = formData;
 
 	const onChange = (e) => {
-		// console.log("event.target.name", e.target.name);
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
@@ -27,12 +27,12 @@ const Login = ({ login, isAuthenticated }) => {
 	};
 
 	if (isAuthenticated) {
-		return <Navigate to='/Dashboard' />;
+		return <Navigate to='/dashboard' />;
 	}
 
 	return (
 		<div className='login'>
-			<form className='login-form' action='' onSubmit={(e) => onSubmit(e)}>
+			<form className='login-form' action='' onSubmit={onSubmit}>
 				<h1>Login</h1>
 				<input
 					className='input-wide'
@@ -55,11 +55,12 @@ const Login = ({ login, isAuthenticated }) => {
 				<input type='submit' className='btn-wide ' value='Login' />
 				<p>
 					Don't have have an account?{"  "}
-					<Link className='blue-link' to='/'>
+					<Link className='blue-link' to='/Register'>
 						Sign Up
 					</Link>
 				</p>
 			</form>
+			<GoogleSignInButton />
 		</div>
 	);
 };

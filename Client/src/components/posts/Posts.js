@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import PostItem from "./PostItem";
 import PostForm from "./PostForm";
 import { getPosts } from "../../actions/post";
+import "./Posts.css";
 
 const Posts = ({ getPosts, post: { posts } }) => {
 	useEffect(() => {

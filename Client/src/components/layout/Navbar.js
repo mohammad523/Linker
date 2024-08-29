@@ -10,7 +10,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 	const authLinks = (
 		<ul className='nav-links'>
 			<li>
-				<Link to='/members'>Members</Link>
+				<Link to='/members'>👥</Link>
 			</li>
 			<li>
 				<Link to='/posts'>Posts</Link>
@@ -22,7 +22,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 			</li>
 			<li onClick={logout}>
 				<Link to='/login'>
-					<span className='hide-sm'>Logout</span>
+					<span className='hide-sm'>🚪</span>
 				</Link>
 			</li>
 		</ul>

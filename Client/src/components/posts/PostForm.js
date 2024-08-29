@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addPost } from "../../actions/post";
+import "./Posts.css";
 
 const PostForm = ({ addPost }) => {
 	const [text, setText] = useState("");

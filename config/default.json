@@ -1,7 +1,0 @@
-
-{
-    "jwtSecret": "donttellanyonewhatthissecrettokenisssss",
-    "MONGO_URI": "mongodb+srv://mh111:mh111@cluster0.qiimdue.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    "MONGO_LOCAL": "mongodb://localhost:27017/linkerBackend",
-    "STRIPE_PRIVATE_KEY": ""
-}

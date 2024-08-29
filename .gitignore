@@ -2,7 +2,11 @@
 
 # dependencies
 /node_modules
-/config/db.js
+/config/default.json
+/config/production.json
+/config/google-keys.js
+/config/facebook-keys.js
+/config/config.env
 /.pnp
 .pnp.js
 
@@ -18,6 +22,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+var.env
 
 npm-debug.log*
 yarn-debug.log*

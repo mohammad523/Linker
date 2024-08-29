@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 /**
- * middleware is the middleman between the server and the client.
+ * The middleware is designed to be placed in the middleware stack of an
+ * Express.js route to ensure that routes protected by authentication are only
+ * accessible to users with a valid JWT.
+ *
  * it process the jwt token from the req.header, then verify, then decrypt
  */
 
